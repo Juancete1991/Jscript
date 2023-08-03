@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+      
+      <script>
+         //function saludo(){
+          //var lastname = 'hola mundo' //Creamos la variable//
+          //alert (lastname)
+          //lastname = 0
+          //var resultado = lastname + 1
+          //alert (resultado)
+          function guardar()
+           {
+
+             
+              var tbody = document.getElementById("tbody")   //el document, estas seleccionando el DOM
+              
+              var numFila= tbody.rows.length
+              //alert(tbody.rows.length-1)//esto lo pusimos depues de la fila 22, me dice cuantoas filas hay
+
+            
+            
+               for (x = 0;x < numFila; x++ ) //esto es para poder modificar
+                   {
+                        if (tbody.rows[x].childNodes[0].innerHTML === document.getElementById("id").value)
+                        {
+                         tbody.rows[x].childNodes[1].innerHTML = document.getElementById("nombres").value
+                         tbody.rows[x].childNodes[2].innerHTML = document.getElementById("apellidos").value
+                         document.getElementById('id').value=""
+                         document.getElementById('nombres').value=""
+                         document.getElementById('apellidos').value=""
+                         return
+                        }
+                    }
+             var fila = tbody.insertRow() //inserto una fila
+
+            
+              fila.setAttribute("id", "fila_" + numFila) //aca le damos a cada fija su numero de fila//le ponemos un atributo, el id, para Ver y Borrar- en los parentesis, va el atributo y luego el valor.... cada fila va a llamarse fila1, fila2 y asi
+              //se crea en JS porq es dinamico, el html como las filas no existen hasta q son creadas no podriamos hacerlo poreso JS
+
+              var celda = fila.insertCell() //inserto una celda al lado
+              celda.innerHTML = numFila
+              celda = fila.insertCell()            
+              celda.innerHTML = document.getElementById("nombres").value // y le doy el valor que se puso en Nombres, como texto
+              celda = fila.insertCell() 
+              celda.innerHTML = document.getElementById("apellidos").value
+              celda = fila.insertCell()
+              celda.innerHTML = "<button onclick ='Ver(" + numFila + ")'>ver</button>" //en vez de darle el valor del footer, le pongo un boton que diga 
+              celda = fila.insertCell()
+              celda.innerHTML = "<button onclick='borrar(" + numFila + " )'>Borrar</button>" //hicimos lo de numFila para que borre la que quieras y no la ultima fila
+              // como el numFila es un valor y no un string, le terminamos las " antes y despues las volvemos a brir
+              //document.getElementById('nombre').value = ""
+              //document.getElementById('apellido').value = ""
+
+            }
+
+           function Ver(fila) 
+           {  // var fila va a ser Tr, y va a tener el id, 
+              //console.log("prueba console.log - fila numero = " + fila)
+              document.getElementById("id").value = document.getElementById("fila_" + fila).childNodes[0].innerHTML
+              document.getElementById("nombres").value = document.getElementById("fila_" + fila).childNodes[1].innerHTML //igual q el borrar, pero lo q hace es acceder a los hijos, osea los Td
+              document.getElementById("apellidos").value = document.getElementById("fila_" + fila).childNodes[2].innerHTML
+              
+              //lo q hicimos aca es que con VER te trae los valores de la fila al input, pero necesitamos q borre el q seleccionaste y modificaste asiq agregamos lo siguiente
+              //document.getElementById("fila_" + fila).remove()  para q borre la vieja
+
+            }
+
+           function borrar (fila) //parametro a borrar
+           {  
+            document.getElementById("fila_" + fila).remove()
+            //alert(fila)
+
+
+           }
+          
+         
+        
+        
+      </script>
+      <style>
+        button {
+          color:dodgerblue ; background-color: black;
+          text-align: right;
+        }
+        th
+         {
+          border: 1px solid black;
+         }
+
+        td
+         {
+          border: 1px solid black;
+         }
+        caption
+         {
+          border: 1px solid black;
+         }
+        
+             
+      </style>
+      
+      
+</head>
+
+<body>
+    <a href="TableMenu.html" target="_self">
+     <button href="TableMenu.html"> 
+      Menu del dia
+     </button>
+    </a>
+    <a href="TableEmpleados.html" target="_self">
+      <button href="TableEmpleados.html"> 
+        Tabla de empleados
+      </button>
+    </a>
+    <br/>
+    <br/>
+    <hr/>
+
+    <table border="1">
+      <thead>
+        <tr>
+          <th>id</th>
+          <th>nombre</th>
+          <th>apellido</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+      <tfoot>
+        <tr>
+          <td><input id="id" readonly/></td>
+          <td><input id="nombres"/></td>
+          <td><input id="apellidos"/></td>
+          <td colspan="2" align = center><button onclick="guardar()">GUARDAR</button></td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+  
+</body>
+</html>
